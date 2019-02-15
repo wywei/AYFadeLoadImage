@@ -23,11 +23,18 @@ class ViewController: UIViewController {
         sender.isSelected = !sender.isSelected
 
         if sender.isSelected {
+            // 
             // UIImageView
-            imageView.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), fadeInDuration: 1.0)
+//            imageView.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), fadeInDuration: 1.0)
+//
+//            // UIButton
+//            iconBtn.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), for: .normal)
+
+            // UIImageView
+            imageView.kf.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), fadeInDuration: 1.0)
 
             // UIButton
-            iconBtn.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), for: .normal)
+            iconBtn.kf.setFadeImage(with: URL(string: "http://img1.gtimg.com/sports/pics/hv1/182/87/2183/141971942.jpg"), for: .normal)
 
         } else {
             imageView.image = nil
