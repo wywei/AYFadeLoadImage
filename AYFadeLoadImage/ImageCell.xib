@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="148" id="KGk-i7-Jjw" customClass="ImageCell" customModule="AYFadeLoadImage" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="329" height="148"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="329" height="147.5"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IDu-nd-zUy">
+                        <rect key="frame" x="10" y="10" width="96.5" height="127.5"/>
+                    </imageView>
+                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ow0-Qn-mnB">
+                        <rect key="frame" x="116.5" y="10" width="96" height="127.5"/>
+                    </imageView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xuz-4O-nXk">
+                        <rect key="frame" x="222.5" y="10" width="96.5" height="127.5"/>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="leading" secondItem="IDu-nd-zUy" secondAttribute="trailing" constant="10" id="2F1-K4-Ge8"/>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="centerY" secondItem="IDu-nd-zUy" secondAttribute="centerY" id="Aaj-OE-EUu"/>
+                    <constraint firstAttribute="bottom" secondItem="IDu-nd-zUy" secondAttribute="bottom" constant="10" id="Dpa-W5-FCt"/>
+                    <constraint firstItem="IDu-nd-zUy" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="IcI-lA-qdb"/>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="leading" secondItem="IDu-nd-zUy" secondAttribute="trailing" constant="10" id="N9w-0z-nmH"/>
+                    <constraint firstItem="xuz-4O-nXk" firstAttribute="height" secondItem="Ow0-Qn-mnB" secondAttribute="height" id="NDq-Yw-OCj"/>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="PRr-w0-ZGt"/>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="width" secondItem="IDu-nd-zUy" secondAttribute="width" id="Rf1-Le-Juw"/>
+                    <constraint firstAttribute="bottom" secondItem="xuz-4O-nXk" secondAttribute="bottom" constant="10" id="VIo-9c-KLH"/>
+                    <constraint firstItem="xuz-4O-nXk" firstAttribute="width" secondItem="Ow0-Qn-mnB" secondAttribute="width" id="YcW-0b-yah"/>
+                    <constraint firstItem="IDu-nd-zUy" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="ajI-jg-oUM"/>
+                    <constraint firstItem="xuz-4O-nXk" firstAttribute="leading" secondItem="Ow0-Qn-mnB" secondAttribute="trailing" constant="10" id="eQl-y5-cVS"/>
+                    <constraint firstAttribute="bottom" secondItem="Ow0-Qn-mnB" secondAttribute="bottom" constant="10" id="grF-LN-R0h"/>
+                    <constraint firstAttribute="trailing" secondItem="xuz-4O-nXk" secondAttribute="trailing" constant="10" id="kgh-oW-uAG"/>
+                    <constraint firstItem="xuz-4O-nXk" firstAttribute="centerY" secondItem="Ow0-Qn-mnB" secondAttribute="centerY" id="rIc-gg-CBp"/>
+                    <constraint firstItem="Ow0-Qn-mnB" firstAttribute="height" secondItem="IDu-nd-zUy" secondAttribute="height" id="tcO-7o-n8M"/>
+                    <constraint firstItem="xuz-4O-nXk" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="10" id="xJP-lu-Lkg"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="button" destination="xuz-4O-nXk" id="Emv-JX-Tfo"/>
+                <outlet property="imageViewOne" destination="IDu-nd-zUy" id="pdu-nW-0cC"/>
+                <outlet property="imageViewTwo" destination="Ow0-Qn-mnB" id="yjU-B6-ifs"/>
+            </connections>
+            <point key="canvasLocation" x="144.80000000000001" y="107.0464767616192"/>
+        </tableViewCell>
+    </objects>
+</document>

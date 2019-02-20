@@ -14,7 +14,6 @@ import Kingfisher
 /**
  *    Set image to use in button from web for a specified state.
  */
-
 extension Kingfisher where Base: UIButton {
 
     /**

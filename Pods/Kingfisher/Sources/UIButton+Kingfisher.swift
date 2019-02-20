@@ -69,7 +69,12 @@ extension Kingfisher where Base: UIButton {
         if !options.keepCurrentImageWhileLoading {
             base.setImage(placeholder, for: state)
         }
-        
+
+
+        let maybeIndicator = indicator
+        maybeIndicator?.startAnimatingView()
+
+
         setWebURL(resource.downloadURL, for: state)
         let task = KingfisherManager.shared.retrieveImage(
             with: resource,
@@ -84,6 +89,7 @@ extension Kingfisher where Base: UIButton {
             },
             completionHandler: {[weak base] image, error, cacheType, imageURL in
                 DispatchQueue.main.safeAsync {
+
                     guard let strongBase = base, imageURL == self.webURL(for: state) else {
                         completionHandler?(image, error, cacheType, imageURL)
                         return
@@ -94,6 +100,33 @@ extension Kingfisher where Base: UIButton {
                     }
 
                     completionHandler?(image, error, cacheType, imageURL)
+
+                    guard let transitionItem = options.lastMatchIgnoringAssociatedValue(.transition(.none)),
+                        case .transition(let transition) = transitionItem, ( options.forceTransition || cacheType == .none) else
+                    {
+
+                        completionHandler?(image, error, cacheType, imageURL)
+                        return
+                    }
+
+                    #if !os(macOS)
+                    UIView.transition(with: strongBase, duration: 0.0, options: [],
+                                      animations: { maybeIndicator?.stopAnimatingView() },
+                                      completion: { _ in
+
+                                        UIView.transition(with: strongBase, duration: transition.duration,
+                                                          options: [transition.animationOptions, .allowUserInteraction],
+                                                          animations: {
+                                                            // Set image property in the animation.
+                                                        
+                                        },
+                                                          completion: { finished in
+                                                            transition.completion?(finished)
+                                                            completionHandler?(image, error, cacheType, imageURL)
+                                        })
+                    })
+                    #endif
+                    
                 }
             })
         
@@ -235,7 +268,75 @@ private var lastBackgroundURLKey: Void?
 private var backgroundImageTaskKey: Void?
 
 
+private var indicatorKey: Void?
+private var indicatorTypeKey: Void?
+
+
 extension Kingfisher where Base: UIButton {
+
+
+    /// Holds which indicator type is going to be used.
+    /// Default is .none, means no indicator will be shown.
+    public var indicatorType: IndicatorType {
+        get {
+            let indicator = objc_getAssociatedObject(base, &indicatorTypeKey) as? IndicatorType
+            return indicator ?? .none
+        }
+
+        set {
+            switch newValue {
+            case .none:
+                indicator = nil
+            case .activity:
+                indicator = ActivityIndicator()
+            case .image(let data):
+                indicator = ImageIndicator(imageData: data)
+            case .custom(let anIndicator):
+                indicator = anIndicator
+            }
+
+            objc_setAssociatedObject(base, &indicatorTypeKey, newValue, .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+
+    /// Holds any type that conforms to the protocol `Indicator`.
+    /// The protocol `Indicator` has a `view` property that will be shown when loading an image.
+    /// It will be `nil` if `indicatorType` is `.none`.
+    public fileprivate(set) var indicator: Indicator? {
+        get {
+            guard let box = objc_getAssociatedObject(base, &indicatorKey) as? Box<Indicator> else {
+                return nil
+            }
+            return box.value
+        }
+
+        set {
+            // Remove previous
+            if let previousIndicator = indicator {
+                previousIndicator.view.removeFromSuperview()
+            }
+
+            // Add new
+            if var newIndicator = newValue {
+                // Set default indicator frame if the view's frame not set.
+                if newIndicator.view.frame == .zero {
+                    newIndicator.view.frame = base.frame
+                }
+                newIndicator.viewCenter = CGPoint(x: base.bounds.midX, y: base.bounds.midY)
+                newIndicator.view.isHidden = true
+                base.addSubview(newIndicator.view)
+            }
+
+            // Save in associated object
+            // Wrap newValue with Box to workaround an issue that Swift does not recognize
+            // and casting protocol for associate object correctly. https://github.com/onevcat/Kingfisher/issues/872
+            objc_setAssociatedObject(base, &indicatorKey, newValue.map(Box.init), .OBJC_ASSOCIATION_RETAIN_NONATOMIC)
+        }
+    }
+
+
+
     /**
      Get the background image URL binded to this button for a specified state.
      
